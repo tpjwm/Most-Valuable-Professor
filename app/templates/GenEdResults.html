@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>GenEd Results</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{{ url_for('static', filename='img/cs.ico') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}"> -->
+
+        <style>
+            table {
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            th, td {
+              padding: 8px;
+              text-align: center;
+              border-bottom: 1px solid #ddd;
+            }
+            
+            tr:not(:first-child):hover {background-color:#b6fdff;}
+        </style>
+
+    
+        <!-- Custom CSS -->
+        <!-- <link rel="stylesheet" href="temp.css"> -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/webpage.css') }}">
+
+        <!-- Chart javascript -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        
+        <!-- Fonts from Google -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;500&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+
+        <!-- Symbols from Font Awesome -->
+        <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+
+    </head>
+
+    <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #0F2040; color: #ff914d;">
+
+        <div class="container-fluid">
+        
+          <!-- Brand Logo -->
+          <a class="navbar-brand" style="padding-top: 0; padding-bottom: 0;" href="{{ url_for('indexpage') }}">
+            <img src="{{ url_for('static', filename='img/mvp_pages.png') }}" alt=""width="90" height="45">
+          </a>
+  
+          <!-- Navigation compression capability for devices such as phones and tablets with smaller screens -->
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <!-- Features to be compressed on smaller screens-->
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+              
+            <!-- Navigation Links-->
+            <ul class="navbar-nav ms-auto">
+              
+              {% if admin == true %}
+                <li class="nav-item">
+                  <a class="nav-link mx-3" href="{{ url_for('adminpage') }}"><strong>ADMIN</strong></a>
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('indexpage') }}"><strong>SEARCH</strong></a>
+            </li>  
+              <li class="nav-item">
+                  <a class="nav-link mx-3" href="{{ url_for('rateFormPage') }}"><strong>RATE</strong></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('genedselectorpage') }}"><strong>FIND GEN-EDS</strong></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link mx-3" href="{{ url_for('aboutus') }}"><strong>ABOUT US</strong></a>
+              </li>
+
+              {%if user == None%}
+            <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('login') }}"><strong>LOGIN</strong></a>
+            </li>
+              {%else%}
+              <div class="collapse navbar-collapse" style="margin-right: 20px;">
+                  <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <strong>{{user}}</strong>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -50px;height: 50px;width: 10px !important;">
+                        <a class="dropdown-item" href="{{ url_for('logout') }}" style="text-align: center;">LOGOUT</a>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              {%endif%}
+  
+            </ul>
+  
+        </div>
+  
+      </nav>
+  
+      <!-- Horizontal Rule below Navigation Bar -->
+      <hr class="navigation-hr" size="1">
+
+
+
+    <div class="container table table-responsive mt-4">
+        <div class="row h-auto text-center">
+            <h1 class="display-5 fw-bold">Search Results</h1>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="CourseID">CourseID</th>
+                    <th class="CourseID">Subject</th>
+                    <th class="Year">Number</th>
+                    <th class="Professor">Professor</th>
+                    <th class="Term">GenEd Tags</th>
+                    <th class="Term">Average GPA</th>
+                    <th class="Term">Average Rating</th>
+                    <th class="Term">Average Work Hours</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr></tr>
+                {% for item in items %}
+                    <tr class='clickable-row' data-href="{{ url_for('ProfessorSearch', Professor = item.Professor, Subject = item.Subject, CourseNumber = item.CourseNumber) }}">
+                        <td>{{item.CourseID}}</td>
+                        <td>{{item.Subject}}</td>
+                        <td>{{item.CourseNumber}}</td>
+                        <td>{{item.Professor}}</td>
+                        <td>{{item.GenEd_Tags}}</td>
+                        <td>{{item.Average_GPA}}</td>
+                        <td>{{item.Average_Rating}}</td>
+                        <td>{{item.Average_Work_Hours}}</td>
+                    </tr>
+                {% endfor %}
+                
+                </tbody>
+        </table>
+    </div>
+
+  </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script/modal.js') }}"></script>
+    <script src="{{ url_for('static', filename='script/scripts.js') }}"></script>
+
+
+</html>

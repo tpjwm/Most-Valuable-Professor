@@ -1,0 +1,69 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="The sign in page for our awesome website" content="">
+    <meta name="Dimitar" content="">
+    <link rel="canonical" href="https://getbootstrap.com/docs/3.4/examples/signin/">
+
+    <title>Sign Up For MVP</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" 
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/signin.css') }}">
+
+  </head>
+
+  <body>
+    <div class="video-container" style="position: fixed; z-index: -99; width: 100%; height: 100%">
+      <div class="video-foreground">
+        <iframe
+                src="https://youtube.com/embed/h6hzVOwaN_4?autoplay=1&mute=1&controls=0&showinfo=0&autohide=1"
+                frameBorder="0" height="100%" width="100%" allowFullScreen>
+                 
+     </iframe>
+   </div>             
+  </div>          
+    
+    <div class="container">
+
+      <form class="form-signin">
+        <h2 class="form-signin-heading" style="text-align: center;">SIGN UP</h2>
+        <label for="inputNetID" class="sr-only"><strong>NetID</strong></label>
+        <input type="text" id="inputNetID" class="form-control" placeholder="NetID" required autofocus>
+        <label for="inputPassword" class="sr-only"><strong>Password</strong></label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+        <!-- <div class="row">
+            <div class="col-md-4"><button style="background-color: #ff914d" class="btn btn-md btn-block" type="submit" id="signUpBtn">Sign Up</button></div>
+            <div class="col-md-8 col-md-offset-4"><button style="background-color: #0F2040" class="btn btn-md" type="submit" id="loginBtn">Log In</button></div>
+        </div> -->
+      </form>
+
+      <div class="col-md-12"><button class="btn btn-md" style="background-color: #ff914d;width: 300px;margin-top: 10px;" type="submit" id="signUpBtn">Sign Up</button></div>
+      <p style="height: 40px;"></p>
+      <div class="col-md-12"><button class="btn btn-md" style="background-color: #0F2040;width: 300px;" type="submit" id="loginBtn">Log In</button></div>
+      <p style="height: 20px;"></p>
+      <div class="col-md-12"><button class="btn btn-md btn-success" style="width: 300px;" type="submit" id="continueBtn">Continue Without Account</button></div>
+      
+      <div class="toast align-items-center text-white border-0" role="alert" aria-live="assertive" aria-atomic="true" id="response-bg" style="margin-left: 36.7%;margin-top: 100px;">
+        <div class="d-flex">
+          <div class="toast-body" id="response"> </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+      </div>
+      
+    </div> <!-- /container -->
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/scripts.js') }}"></script> <!--SCRIPT IMPORT-->
+
+</html>

@@ -1,0 +1,272 @@
+/* Basic setup
+Some code modified from bootstrap official guide
+ref: https://getbootstrap.com/docs/4.0/examples/sticky-footer/
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    Margin bottom by footer height
+    margin-bottom: 2em;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2em;
+    Set the fixed height of the footer here
+    line-height: 1.5em;
+    Vertically center the text there
+    background-color: #f5f5f5;
+}
+
+hr {
+    width: 50%;
+    margin: auto;
+}
+
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tr {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-responsive{
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+bootstrap modifications
+.container {
+    width: auto;
+    max-width: 2000px;
+    padding: 0 15px;
+}
+
+.extra-bottom {
+    padding-bottom: 2em;
+}
+
+.task {
+    width: 50%;
+}
+
+.task-id {
+    width: 10%;
+}
+
+.status {
+    width: 20%;
+}
+
+.update {
+    width: 10%;
+} */
+
+.d-flex {
+	margin-left:10px;
+}
+
+/* Centering Buttons on Admin Page, remove after Demo */
+.button-center {
+	padding-top: 3.0%;
+	margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	text-align: center;
+}
+
+.text-temp {
+	padding-top: 5.0%;
+	margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	text-align: center;
+}
+
+.mvp-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    font-size: 5.5rem;
+
+    padding-top: 5.0%;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.professor-title {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 6.0rem;
+}
+
+/* Need to change this, badly written code */
+.search-temp {
+    padding-top: 7.0%;
+}
+
+.navbar {
+    /* height: 75px; */
+    /* font-family: 'Josefin Sans', sans-serif;  */
+    font-family: 'Spartan', sans-serif;
+}
+
+.navigation-hr {
+    margin: auto;
+    height: 7.5px;
+    color: white;
+}
+
+.row {
+    height: 250px;
+    color: white;
+}
+
+.last-row {
+    height: 373px;
+
+	font-family: 'Montserrat', sans-serif;
+    font-weight: 100;
+    font-size: 1.5rem;
+
+    margin: auto;
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    text-align: center;
+}
+
+/* Copied Search Bar Code */
+.wrapper {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.container .input{
+	border: 0;
+	outline: none;
+	color: #8b7d77;
+}
+
+.search_wrap{
+	width: 600px;
+	margin: 38px auto;
+    font-family: 'Spartan', sans-serif;
+}
+
+.search_wrap .search_box{
+	position: relative;
+	width: 600px;
+	height: 60px;
+}
+
+.search_wrap .search_box .input{
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 2px 20px;
+	border-radius: 3px;
+	font-size: 20px;
+}
+
+.search_wrap .search_box .btn{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 60px;
+	height: 100%;
+	background: #7690da;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.search_wrap .search_box .btn:hover{
+	background: #708bd2;	
+}
+
+.search_wrap .search_box .btn.btn_common .fas{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	color: #fff;
+	font-size: 20px;
+}
+
+.search_wrap.search_wrap_1 .search_box .btn{
+	right: 0;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+
+.search_wrap.search_wrap_1 .search_box .input,
+.search_wrap.search_wrap_3 .search_box .input{
+	padding-right: 80px;
+}
+
+.search_wrap.search_wrap_2 .search_box .btn{
+	left: 0;
+	border-top-left-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
+.search_wrap.search_wrap_2 .search_box .input,
+.search_wrap.search_wrap_4 .search_box .input{
+	padding-left: 80px;
+}
+
+.search_wrap.search_wrap_3 .search_box .input,
+.search_wrap.search_wrap_4 .search_box .input,
+.search_wrap.search_wrap_6 .search_box .input{
+	border-radius: 50px;
+}
+
+.search_wrap.search_wrap_3 .search_box .btn{
+	right: 0px;
+	border-radius: 50%;
+}
+
+.search_wrap.search_wrap_4 .search_box .btn{
+	left: 0px;
+	border-radius: 50%;
+}
+
+.search_wrap.search_wrap_6 .search_box .btn,
+.search_wrap.search_wrap_5 .search_box .btn{
+	width: 125px;
+	height: 45px;
+	top: 8px;
+	right: 5px;
+	border-radius: 3px;
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.search_wrap.search_wrap_6 .search_box .btn{
+	border-radius: 25px;
+}
+
+
+.search_wrap.search_wrap_5 .search_box .input,
+.search_wrap.search_wrap_6 .search_box .input{
+	padding-right: 145px;
+}

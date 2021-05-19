@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>CourseProperties Table</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" href="{{ url_for('static', filename='img/cs.ico') }}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/custom.css') }}">
+
+        <style>
+            table {
+              border-collapse: collapse;
+              width: 100%;
+            }
+            
+            th, td {
+              padding: 8px;
+              text-align: center;
+              border-bottom: 1px solid #ddd;
+            }
+            
+            tr:not(:first-child):hover {background-color:#b6fdff;}
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{{ url_for('indexpage') }}">MVP</a>
+              <a class="navbar-brand" href="{{ url_for('adminpage') }}">Admin</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Tables
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('Schedulepage', in_data = 100) }}">Schedule</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('RegisteredUserpage', in_data = 100) }}">Register User</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('AdminUserpage', in_data = 100) }}">Admin User</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('Feedbackpage', in_data = 100) }}">Feedback</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('CourseStatspage', in_data = 100) }}">Course Stats</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('CoursePropertiespage', in_data = 100) }}">Course Properties</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('SearchHistorypage', in_data = 100) }}">Search History</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('ProfessorImagespage', in_data = 100) }}">Professor Images</a></li>
+                    </ul>
+                  </li>
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Advanced Queries
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ url_for('pratikQueryPage') }}">Pratik Query</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('dimitarQueryPage') }}">Dimitar Query</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('michaelQueryPage') }}">Michael Query</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('omarQueryPage') }}">Omar Query</a></li>
+                    </ul>
+                  </li>
+                </ul>                
+                <form class="d-flex mx-4">
+                    <input class="form-control me-2" type="text" id="customSearch" placeholder="Enter [Subject] [Number]">
+                    <input type="button" value="Search" class="btn btn-outline-success" id="CoursePropertiesSearchBtn"></input>
+                </form>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="text" id="mySearch" placeholder="Limit Rows">
+                    <input type="button" value="Limit" class="btn btn-outline-success" id="limitBtn"></input>
+                </form>
+              </div>
+              <a class="nav-link mx-3" href="{{ url_for('rateFormPage') }}"><strong>RATE</strong></a>
+              <a class="nav-link mx-3" href="{{ url_for('aboutus') }}"><strong>ABOUT US</strong></a>
+              <a class="nav-link mx-3" href="{{ url_for('genedselectorpage') }}"><strong>GEN-ED SELECTOR</strong></a>
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"  style="margin-right: 30px;">
+                    <strong>{{user}}</strong>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -50px;height: 50px;width: 10px !important;">
+                    <a class="dropdown-item" href="{{ url_for('logout') }}" style="text-align: center;">LOGOUT</a>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+        </nav>
+
+    <div class="container">    
+        <!-- Button trigger modal -->
+        <div style="text-align: right;">
+        <button type="button" class="btn btn-outline-info btn-sm add" data-bs-toggle="modal" data-bs-target="#CourseProperties-modal" data-source="New CourseProperties">Add Course Property</button>
+        </div>
+
+        
+        <div class="modal fade" id="CourseProperties-modal" tabindex="-1" aria-labelledby="LabelX" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="Label">Add a Course Property</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3 primary-key">
+                    <span class="input-group-text">CourseID</span>
+                    <input type="text" class="form-control" placeholder="CourseID" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="CourseID-form-display">    
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Course Title</span>
+                    <input type="text" class="form-control" placeholder="Course Title" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="CourseTitle-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Course Description</span>
+                    <input type="text" class="form-control" placeholder="Course Description" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="CourseDescription-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Prerequisites</span>
+                    <input type="text" class="form-control" placeholder="Prerequisites" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="Prerequisites-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Linked Sections</span>
+                    <input type="text" class="form-control" placeholder="Linked Sections" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="LinkedSections-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Course Website Link</span>
+                    <input type="text" class="form-control" placeholder="Course Website Link" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="CourseWebsiteLink-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Course Number</span>
+                    <input type="text" class="form-control" placeholder="Course Number" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="CourseNumber-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Course Tag</span>
+                    <input type="text" class="form-control" placeholder="Course Tag" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="CourseTag-form-display">
+                </div>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">Subject</span>
+                    <input type="text" class="form-control" placeholder="Subject" aria-label="CourseProperties-name" aria-describedby="basic-addon1" id="Subject-form-display">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button id="submit-CourseProperties" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+    <!-- <div class="container table table-responsive">           -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="CourseID">CourseID</th>
+                <th class="CourseTitle">CourseTitle</th>
+                <th class="CourseDescription">CourseDescription</th>
+                <th class="Prerequisites">Prerequisites</th>
+                <th class="LinkedSections">LinkedSections</th>
+                <th class="CourseWebsiteLink">CourseWebsiteLink</th>
+                <th class="CourseNumber">CourseNumber</th>
+                <th class="CourseTag">CourseTag</th>
+                <th class="Subject">Subject</th>
+                <th class="update">Update</th>
+                <th class="update">Delete</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr></tr>
+            {% for item in items %}
+                <tr class="table-row">
+                    <td>{{item.CourseID}}</td>
+                    <td>{{item.CourseTitle}}</td>
+                    <td>{{item.CourseDescription}}</td>
+                    <td>{{item.Prerequisites}}</td>
+                    <td>{{item.LinkedSections}}</td>
+                    <td>{{item.CourseWebsiteLink}}</td>
+                    <td>{{item.CourseNumber}}</td>
+                    <td>{{item.CourseTag}}</td>
+                    <td>{{item.Subject}}</td>
+                    
+                    <td><button type="button" class="btn btn-outline-info btn-sm edit" data-bs-toggle="modal" data-bs-target="#CourseProperties-modal" data-source="CourseProperties" data-content="{{item}}"><i class="fa fa-pen fa-1" aria-hidden="true"></i></button></td>
+                    <td><button class="btn btn-outline-secondary btn-sm remove" data-source="{{'D',item.CourseID}}" type="button"><i class="fa fa-trash fa-1" aria-hidden="true"></i></button></td>
+                </tr>
+            {% endfor %}
+            
+            </tbody>
+    </table>
+    <!-- </div> -->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <!-- <script src="{{ url_for('static', filename='script/modal.js') }}"></script> -->
+    <script src="{{ url_for('static', filename='script/scripts.js') }}"></script>
+
+</html>

@@ -1,0 +1,263 @@
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/webpage.css') }}">
+    
+    <!-- Fonts from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+
+    <!-- Symbols from Font Awesome -->
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    
+    <style>
+        .bottom-buffer{margin-bottom:-100px;}
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #0F2040; color: #ff914d;">
+
+      <div class="container-fluid">
+      
+        <!-- Brand Logo -->
+        <a class="navbar-brand" style="padding-top: 0; padding-bottom: 0;" href="{{ url_for('indexpage') }}">
+          <img src="{{ url_for('static', filename='img/mvp_pages.png') }}" alt=""width="90" height="45">
+        </a>
+
+        <!-- Navigation compression capability for devices such as phones and tablets with smaller screens -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Features to be compressed on smaller screens-->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            
+          <!-- Navigation Links-->
+          <ul class="navbar-nav ms-auto">
+              
+            {% if admin == true %}
+                <a class="nav-link mx-3" href="{{ url_for('adminpage') }}"><strong>ADMIN</strong></a>
+            {% endif %}
+            <a class="nav-link mx-3" href="{{ url_for('indexpage') }}"><strong>SEARCH</strong></a>
+            
+            <a class="nav-link mx-3" href="{{ url_for('rateFormPage') }}"><strong>RATE</strong></a>
+
+            <a class="nav-link mx-3" href="{{ url_for('genedselectorpage') }}"><strong>FIND GEN-EDS</strong></a>
+      
+            <a class="nav-link mx-3" href="{{ url_for('aboutus') }}"><strong>ABOUT US</strong></a>
+            {%if user == None%}
+                <a class="nav-link mx-3" href="{{ url_for('login') }}"><strong>LOGIN</strong></a>
+            {%else%}
+            <div class="collapse navbar-collapse" style="margin-right: 20px;">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <strong>{{user}}</strong>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -50px;height: 50px;width: 10px !important;">
+                      <a class="dropdown-item" href="{{ url_for('logout') }}" style="text-align: center;">LOGOUT</a>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            {%endif%}
+          </ul>
+
+      </div>
+
+    </nav>
+
+    <!-- Horizontal Rule below Navigation Bar -->
+    <hr class="navigation-hr" size="1">
+
+
+
+    <!-- Form Code-->
+    <div class="py-4 text-center">
+      <h1>GenEd Finder</h1>
+      <p class="lead">Please fill out all necessary fields to find matching GenEd courses. Results will satisfy ALL selected requirements.</p>
+    </div>
+
+    <div class="container jumbotron bg-light border">
+      <main>
+        <div class="col-md-7 col-lg-10">
+          <form class="needs-validation" id="genEdForm" novalidate>
+            <div class="col">
+
+              <div class="col-sm-8">
+                <label for="comment-field" class="form-label">General Education Tags</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexchecDefault" id="flexRadioAdvComp">
+                  <label class="form-check-label" for="flexRadioAdvComp">
+                      Advanced Composition
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioWesternComp">
+                  <label class="form-check-label" for="flexRadioWesternComp">
+                      Cultural Studies (Western/Comparative)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioUsMin">
+                  <label class="form-check-label" for="flexRadioUsMin">
+                      Cultural Studies (US Minority)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioNonWest">
+                  <label class="form-check-label" for="flexRadioNonWest">
+                      Cultural Studies (Non-Western)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioHisPhil">
+                  <label class="form-check-label" for="flexRadioHisPhil">
+                      Humanities & the Arts (Historical and Philosophical Perspectives)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioLitArts">
+                  <label class="form-check-label" for="flexRadioLitArts">
+                      Humanities & the Arts (Literature and the Arts)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioLifeSci">
+                  <label class="form-check-label" for="flexRadioLifeSci">
+                      Natural Sciences & Technology (Life Sciences)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioPhySci">
+                  <label class="form-check-label" for="flexRadioPhySci">
+                      Natural Sciences & Technology (Physical Sciences)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioQuant1">
+                  <label class="form-check-label" for="flexRadioQuant1">
+                      Quantitative Reasoning 1
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioQuant2">
+                  <label class="form-check-label" for="flexRadioQuant2">
+                      Quantitative Reasoning 2
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioBehSci">
+                  <label class="form-check-label" for="flexRadioBehSci">
+                      Social & Behavioral Sciences (Behavioral Sciences)
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioSocSci">
+                  <label class="form-check-label" for="flexRadioSocSci">
+                      Social & Behavioral Sciences (Social Sciences)
+                  </label>
+                </div>
+              </div>
+
+              <div class="col-sm-6 mt-3">
+                <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault8" checked>
+                <label class="form-check-label" for="flexRadioDefault8">
+                  Include GPA Threshold
+                </label>
+                <div id="gpaSlider">
+                  <label for="gpaRange" class="form-label">Average GPA</label>
+                  <input type="range" class="form-range" min="0" max="40" id="gpaRange">
+                  <p>Value: <span id="gpaValue">2</span></p>
+                </div>
+              
+
+                <div class="col-sm-6 mt-3" id="yearCol">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault9" checked>
+                  <label class="form-check-label" for="flexRadioDefault9">
+                    Limit Year Range
+                  </label>
+                  <div id="yearSlider">
+                    <label for="yearRange" class="form-label">Minimum Year</label>
+                    <input type="range" class="form-range" min="2010" max="2021" step="1" id="yearRange">
+                    <p>Value: <span id="yearValue">2016</span></p>
+                    <label class="form-check-label" for="flexRadioDefault10">
+                      Include Covid Semesters (Sp2020 - Sp2021)
+                    </label>
+                    <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault10" checked>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 mt-3" id="ratingCol">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault11" checked>
+                  <label class="form-check-label" for="flexRadioDefault11">
+                    Limit average Rating
+                  </label>
+                  <div id="ratingSlider">
+                    <label for="ratingRange" class="form-label">Minimum Rating</label>
+                    <input type="range" class="form-range" min="0" max="100" step="1" id="ratingRange">
+                    <p>Value: <span id="ratingValue">5</span></p>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 mt-3" id="timeCol">
+                  <input class="form-check-input" type="checkbox" name="flexRadioDefault" id="flexRadioDefault12" checked>
+                  <label class="form-check-label" for="flexRadioDefault12">
+                    Limit average hours of work
+                  </label>
+                  <div id="timeSlider">
+                    <label for="timeRange" class="form-label">Maximum Hours</label>
+                    <input type="range" class="form-range" min="0" max="60" step="1" id="timeRange">
+                    <p>Value: <span id="timeValue">30</span></p>
+                  </div>
+                </div>
+              </div>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <div class="mt-4 mb-5 button-center">
+      <button class="w-50 btn btn-primary btn-lg left-buffer" type="submit" id="findCourseBtn">Find Courses</button>
+    </div>
+
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/scripts.js') }}"></script>
+  <script src="{{ url_for('static', filename='script/form-validation.js') }}"></script>
+</html>
+
+
+
+

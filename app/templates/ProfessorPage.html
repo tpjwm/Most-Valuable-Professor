@@ -1,0 +1,555 @@
+
+<!doctype html>
+
+<html lang="en">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="temp.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/webpage.css') }}">
+
+    <!-- Chart javascript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    
+    <!-- Fonts from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+
+    <!-- Symbols from Font Awesome -->
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #0F2040; color: #ff914d;">
+
+      <div class="container-fluid">
+      
+        <!-- Brand Logo -->
+        <a class="navbar-brand" style="padding-top: 0; padding-bottom: 0;" href="{{ url_for('indexpage') }}">
+          <img src="{{ url_for('static', filename='img/mvp_pages.png') }}" alt=""width="90" height="45">
+        </a>
+
+        <!-- Navigation compression capability for devices such as phones and tablets with smaller screens -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Features to be compressed on smaller screens-->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            
+          <!-- Navigation Links-->
+          <ul class="navbar-nav ms-auto">
+            
+            {% if admin == true %}
+              <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('adminpage') }}"><strong>ADMIN</strong></a>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('indexpage') }}"><strong>SEARCH</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('rateFormPage') }}"><strong>RATE</strong></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('genedselectorpage') }}"><strong>FIND GEN-EDS</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('aboutus') }}"><strong>ABOUT US</strong></a>
+            </li>
+
+            {%if user == None%}
+          <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('login') }}"><strong>LOGIN</strong></a>
+          </li>
+            {%else%}
+            <div class="collapse navbar-collapse" style="margin-right: 20px;">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <strong>{{user}}</strong>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -50px;height: 50px;width: 10px !important;">
+                      <a class="dropdown-item" href="{{ url_for('logout') }}" style="text-align: center;">LOGOUT</a>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            {%endif%}
+
+          </ul>
+
+      </div>
+
+    </nav>
+
+    <!-- Horizontal Rule below Navigation Bar -->
+    <hr class="navigation-hr" size="1">
+    
+
+    <!-- Jumbotron Contains:
+    - Course Number
+    - Course Name
+    - Course Description
+    - Professor Photo -->
+    <main>
+      <div class="container py-4">
+        <div class="p-5 mb-4 bg-light rounded-3">
+          <div class="container-fluid">
+            <div class="row align-items-md-stretch h-auto">
+              <div class="col-md-8">
+                <!-- Course Number -->
+                <h1 class="display-5 fw-bold" id="course-subject-number" style="font-size: 4rem;">{{Subject + ' ' + CourseNumber}}</h1>
+
+                <!-- Course Name -->
+                <h2 class="col-md-8 fs-4">{{CourseTitle}}</h2>
+                
+                <!-- Course Description -->
+                <p>{{CourseDescription}}</p>
+
+                <!-- Rate Button -->
+                <button class="btn btn-secondary" type="button" id="rate-professor">Rate</button>
+              </div>
+            
+              <div class="col-md-4" style="display: flex; align-items: center; justify-content: center;">
+                <div>
+                  <!-- Professor Image -->
+                  <img class="prof-img mx-auto d-block" src="{{Image}}" alt="{{Professor}}" style="border-radius: 50%; max-width:90%; max-height:90%;">
+  
+                  <!-- Professor Name -->
+                  <div>
+                    <p class="my-1 text-center fs-5 fw-bold" id="professor-name">{{Professor}}</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+    
+        <!-- Average Rating, Average GPA, Hours Per Week -->
+        <div class="row align-items-md-stretch">
+          <div class="col-md-4">
+            <div class="h-auto p-4 bg-light border rounded-3 text-center">
+              <h2>Average Rating</h2>
+                {%if avgRatings == None%}
+                <h1 style="color:rgb(152, 152, 152);font-size: 5rem;">N/A</h1>
+
+                {%elif avgRatings >= 8.5%}
+                <h1 style="color:green; font-size: 5rem;">{{avgRatings}}<span style="color: rgb(152, 152, 152); font-size: 2rem;">/10</span></h1>
+
+                {%elif avgRatings >= 7.5%}
+                <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{avgRatings}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/10</span></h1>
+
+                {%elif avgRatings >= 5%}
+                <h1 style="color:rgb(150, 150, 0); font-size: 5rem;">{{avgRatings}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/10</span></h1>
+
+                {%elif avgRatings >= 2%}
+                <h1 style="color:orange; font-size: 5rem;">{{avgRatings}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/10</span></h1>
+
+                {%else%}
+                <h1 style="color:red; font-size: 5rem;">{{avgRatings}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/10</span></h1>{%endif%}
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="h-auto p-4 bg-light border rounded-3 text-center">
+              <h2>Average Letter Grade</h2>
+              {%if item.GPA >= 3.8%}
+              <h1 style="color:green; font-size: 5rem;">A+</h1>
+
+              {%elif item.GPA >= 3.735%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">A</h1>
+
+              {%elif item.GPA >= 3.66%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">A-</h1>
+
+              {%elif item.GPA >= 3.33%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">B+</h1>
+              
+              {%elif item.GPA >= 3.00%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">B</h1>
+
+              {%elif item.GPA >= 2.66%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">B-</h1>
+
+              {%elif item.GPA >= 2.33%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">C+</h1>
+              
+              {%elif item.GPA >= 2.00%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">C</h1>
+
+              {%elif item.GPA >= 1.66%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">C-</h1>
+      
+              {%elif item.GPA >= 1.33%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">D+</h1>
+
+              {%elif item.GPA >= 1.00%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">D</h1>
+
+              {%elif item.GPA >= 0.66%}
+              <h1 style="color:rgb(150, 150, 0); font-size: 5rem;">D-</h1>
+
+              {%else%}
+              <h1 style="color:red; font-size: 5rem;">F</h1>{%endif%}
+              
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="h-auto p-4 bg-light border rounded-3 text-center">
+              <h2>Hours Per Week</h2>
+                {%if avgTimeConsumption == None%}
+                <h1 style="color:rgb(152, 152, 152); font-size: 5rem;">N/A</h1>
+
+                {%elif avgTimeConsumption >= 30%}
+                <h1 style="color:red; font-size: 5rem;">{{avgTimeConsumption}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">hrs</span></h1>
+
+                {%elif avgTimeConsumption >= 20%}
+                <h1 style="color:orange; font-size: 5rem;">{{avgTimeConsumption}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">hrs</span></h1>
+
+                {%elif avgTimeConsumption >= 10%}
+                <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{avgTimeConsumption}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">hrs</span></h1>
+
+                {%else%}
+                <h1 style="color:green; font-size: 5rem;">{{avgTimeConsumption}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">hrs</span></h1>{%endif%}
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Spacing -->
+        <div class="row h-auto mt-3"></div>
+
+
+
+        <!-- Statistics and Data Visualizations -->
+        <h1 class="display-5 fw-bold" style="text-align: center;">Statistics</h1>
+        <hr class="mb-4"> <!-- Separator line-->
+
+        <!-- Grade Distribution Statistics -->
+        <div class="row align-items-md-stretch h-auto mb-5">
+          
+          <!-- Doughnut Chart -->
+          <div class="col-md-6">
+            <div class="p-5 bg-light border rounded-3 h-auto">
+              <h2 class="mb-2">Grade Distribution</h2>
+              <canvas id="myChart" width="335" height="235"></canvas>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+
+            <!-- Average GPA -->
+            <div class="p-5 bg-light border rounded-3 mb-4">
+              <h2 class="mb-2">Average GPA</h2>
+              {%if item.GPA >= 3.8%}
+              <h1 style="color:green; font-size: 5rem;">{{item.GPA}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/4.00</span></h1>
+
+              {%elif item.GPA >= 3.5%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{item.GPA}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/4.00</span></h1>
+
+              {%elif item.GPA >= 3.0%}
+              <h1 style="color:rgb(150, 150, 0); font-size: 5rem;">{{item.GPA}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/4.00</span></h1>
+
+              {%elif item.GPA >= 2.0%}
+              <h1 style="color:orange; font-size: 5rem;">{{item.GPA}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/4.00</span></h1>
+
+              {%else%}
+              <h1 style="color:red; font-size: 5rem;">{{item.GPA}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">/4.00</span></h1>{%endif%}
+            </div>
+
+            <!-- Percentage of A's -->
+            <div class="p-5 bg-light border rounded-3">
+              <h2 class="mb-2">Percentage of A's</h2>
+              {%if PercentOfAs == None%}
+              <h1 style="color:rgb(152, 152, 152); font-size: 5rem;">N/A</h1>
+
+              {%elif PercentOfAs >= 95%}
+              <h1 style="color:green; font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 90%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 85%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 80%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+              
+              {%elif PercentOfAs >= 75%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 70%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 65%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+              
+              {%elif PercentOfAs >= 60%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 55%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+      
+              {%elif PercentOfAs >= 50%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 40%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%elif PercentOfAs >= 30%}
+              <h1 style="color:rgb(150, 150, 0); font-size: 5rem;">{{PercentOfAs}}%</h1>
+
+              {%else%}
+              <h1 style="color:red; font-size: 5rem;">{{PercentOfAs}}%</h1>{%endif%}
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Other Statistics -->
+        <div class="row align-items-md-stretch h-auto mb-5">
+          <div class="col-md-6">
+            <div class="p-5 bg-light border rounded-3 mb-4">
+              <h2 class="mb-2">Most Common Letter Grade</h2>
+              {%if MaxGradeLetterCount == None%}
+              <h1 style="color:rgb(152, 152, 152); font-size: 5rem;">N/A</h1>
+
+              {%elif item.AP == MaxGradeLetterCount%}
+              <h1 style="color:green; font-size: 5rem;">A+</h1>
+
+              {%elif item.A == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">A</h1>
+
+              {%elif item.AM == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">A-</h1>
+
+              {%elif item.BP == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">B+</h1>
+              
+              {%elif item.B == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">B</h1>
+
+              {%elif item.BM == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">B-</h1>
+
+              {%elif item.CP == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">C+</h1>
+              
+              {%elif item.C == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">C</h1>
+
+              {%elif item.CM == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">C-</h1>
+      
+              {%elif item.DP == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">D+</h1>
+
+              {%elif item.D == MaxGradeLetterCount%}
+              <h1 style="color:rgb(68, 128, 0); font-size: 5rem;">D</h1>
+
+              {%elif item.DM == MaxGradeLetterCount%}
+              <h1 style="color:rgb(150, 150, 0); font-size: 5rem;">D-</h1>
+
+              {%else%}
+              <h1 style="color:red; font-size: 5rem;">F</h1>{%endif%}
+            </div>
+
+            <!-- Total Number of Enrollments -->
+            <div class="p-5 bg-light border rounded-3">
+              <h2 class="mb-2">Total Enrollments</h2>
+              <h1 style="color:blue; font-size: 5rem;">{{(item).AP+(item).A+(item).AM+(item).BP+(item).B+(item).BM+(item).CP+(item).C+(item).CM+(item).DP+(item).D+(item).DM+(item).F}}<span style="color: rgb(152, 152, 152); font-size: 2.5rem;">students</span></h1>
+            </div>
+
+          </div>
+          <div class="col-md-6">
+            <div class="p-5 bg-light border rounded-3 h-auto">
+              <h2 class="mb-2">Grade Distribution</h2>
+              <!-- <div style="display: flex; align-items: center; justify-content: center;"> -->
+                <canvas id="myChart2" width="335" height="235"></canvas>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Spacing -->
+        <div class="row h-auto mt-3"></div>
+
+
+
+        <!-- Comments Section -->
+        {% if feedbackCount > 0 %}
+        <h1 class="display-5 fw-bold" style="text-align: center;">Comments</h1>
+        <h1 style="color: rgb(152, 152, 152); font-size: 1rem; float:right; margin-top: -28px;">Showing {{Feedbacks|length}} Result(s)</h1>
+        <hr class="mb-4" style="margin-top: 10px;"> <!-- Separator line-->
+
+        <div class="row align-items-md-stretch h-auto mb-5">          
+
+          {%for feedback in Feedbacks%}
+          <!-- Comments -->
+          <div class="col-md-8" style="float:none;margin:auto;margin-bottom: 15px;">
+
+            <!-- Row for Comment -->
+            <div class="row align-items-md-stretch h-auto p-4 bg-light border mb-4;" style="border-radius: 2rem;">  
+              
+              <!-- Student NetID and Comment -->
+              <div class="col-md-10">
+                <h2 class="fs-4" style="color: rgb(152, 152, 152);">{{feedback.NetID}}</h2>    
+                <p>{{feedback.Comment}}</p>
+              </div>
+
+              <!-- Student Rating and Hours -->
+              <div class="col-md-2">
+                    
+                <!-- Rating -->
+                <div class="row text-center h-auto mb-3">
+                  <h5>Rating</h5>
+
+                    
+                    {%if feedback.Rating == None%}<h3 class="fw-bold" style="color:rgb(152, 152, 152);">N/A</h3>
+                    {%elif feedback.Rating >= 8.5%}<h3 class="fw-bold" style="color:green;">{{feedback.Rating}}</h3>
+                    {%elif feedback.Rating >= 7.5%}<h3 class="fw-bold" style="color:rgb(68, 128, 0);">{{feedback.Rating}}</h3>
+                    {%elif feedback.Rating >= 5%}<h3 class="fw-bold" style="color:rgb(150, 150, 0);">{{feedback.Rating}}</h3>
+                    {%elif feedback.Rating >= 2%}<h3 class="fw-bold" style="color:orange;">{{feedback.Rating}}</h3>
+                    {%else%}<h3 class="fw-bold" style="color:red;">{{feedback.Rating}}</h3>{%endif%}
+
+                </div>
+
+                <!-- Hours -->
+                <div class="row text-center h-auto">
+                  <h5>Hours</h5>
+                  
+                    {%if feedback.TimeConsumption == None%}<h3 class="fw-bold" style="color:rgb(152, 152, 152);">N/A</h3>
+                    {%elif feedback.TimeConsumption >= 30%}<h3 class="fw-bold" style="color:red;">{{feedback.TimeConsumption}}</h3>
+                    {%elif feedback.TimeConsumption >= 20%}<h3 class="fw-bold" style="color:orange;">{{feedback.TimeConsumption}}</h3>
+                    {%elif feedback.TimeConsumption >= 10%}<h3 class="fw-bold" style="color:rgb(68, 128, 0);">{{feedback.TimeConsumption}}</h3>
+                    {%else%}<h3 class="fw-bold" style="color:green;">{{feedback.TimeConsumption}}</h3>{%endif%}
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          {%endfor%}
+
+        </div>
+        {% endif %}
+
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  <!-- <script src="{{ url_for('static', filename='script/data-visualization.js') }}"></script> -->
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/scripts.js') }}"></script>
+
+  <!-- Doughnut Chart javascript -->
+  <script type="text/javascript">
+    var A = '{{ (item).AP + (item).A + (item).AM }}';
+    var B = '{{ (item).BP + (item).B + (item).BM }}';
+    var C = '{{ (item).CP + (item).C + (item).CM }}';
+    var D = '{{ (item).DP + (item).D + (item).DM }}';
+    var F = '{{ (item).F }}';
+    var W = '{{ (item).W }}';
+
+    var chart = new Chart(document.getElementById("myChart").getContext('2d'), 
+    {
+        type: 'doughnut',
+        data: {
+
+            labels: ['A', 'B', 'C', 'D', 'F'],
+            datasets: 
+            [ {
+                data: 
+                [ parseInt(A), parseInt(B), parseInt(C), parseInt(D), parseInt(F) ],
+                // backgroundColor: ['#1DA462', '#4C8BF5', '#FFCD46', '#FFA700', '#DD5144']
+                backgroundColor: ['#93c47d', '#6d9eeb', '#ffd966', '#f6b26b', '#e06666']
+            }]
+        },
+        options: 
+        {
+            title: 
+            {
+                text: "Chart Title",
+                display: false
+            },
+            animation: { animateScale: true },
+            responsive: true
+        }
+    });
+  </script>
+
+  <!-- Bar Chart -->
+  <script type="text/javascript">
+
+    var chart2 = new Chart(document.getElementById("myChart2").getContext('2d'), 
+    {
+        type: 'bar',
+        data: {
+            labels: ['A+', 'A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
+            datasets: [ {
+                data: ['{{ (item).AP }}', '{{ (item).A }}', '{{ (item).AM }}', '{{ (item).BP }}', '{{ (item).B }}', '{{ (item).BM }}', '{{ (item).CP }}', '{{ (item).C }}', '{{ (item).CM }}', '{{ (item).DP }}', '{{ (item).D }}', '{{ (item).DM }}', '{{ (item).F }}'],
+                backgroundColor: ['#38761d', '#6aa84f', '#93c47d', '#b6d7a8', '#ffe599', '#ffd966', '#f1c232', '#f9cb9c', '#f6b26b', '#e69138', '#ea9999', '#e06666', '#cc0000']
+            }]
+        },
+        options: {
+            title: {
+                text: "Title",
+                display: false
+            },
+            legend: {
+              display: false
+            },
+            animation: {
+                animateScale: true
+            },
+            responsive: true
+        }
+    });
+
+  </script>
+
+  <!-- <script type="text/javascript">
+    
+    var chart3 = new Chart(document.getElementById("myChart2").getContext('2d'), 
+    {
+      type: 'bar',
+      data: {
+        labels: [A, B, C, D, E, F, G],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40],
+          backgroundColor: ['rgba(255, 99, 132, 0.2)','rgba(255, 159, 64, 0.2)','rgba(255, 205, 86, 0.2)','rgba(75, 192, 192, 0.2)','rgba(54, 162, 235, 0.2)','rgba(153, 102, 255, 0.2)','rgba(201, 203, 207, 0.2)'],
+          borderColor: ['rgb(255, 99, 132)','rgb(255, 159, 64)','rgb(255, 205, 86)','rgb(75, 192, 192)','rgb(54, 162, 235)','rgb(153, 102, 255)','rgb(201, 203, 207)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        animation: {
+          animateScale: true
+        }
+      }
+    });
+  </script> -->
+
+
+
+</html>

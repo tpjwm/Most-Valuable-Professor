@@ -1,0 +1,174 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="temp.css"> -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/webpage.css') }}">
+    
+    <!-- Fonts from Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Spartan&display=swap" rel="stylesheet">
+
+    <!-- Symbols from Font Awesome -->
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    
+  </head>
+
+  <body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #0F2040; color: #ff914d;">
+
+      <div class="container-fluid">
+      
+        <!-- Brand Logo -->
+        <a class="navbar-brand" style="padding-top: 0; padding-bottom: 0;" href="{{ url_for('indexpage') }}">
+            <img src="{{ url_for('static', filename='img/mvp_pages.png') }}" alt=""width="90" height="45">
+        </a>
+
+        <!-- Navigation compression capability for devices such as phones and tablets with smaller screens -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Features to be compressed on smaller screens-->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            
+          <!-- Navigation Links-->
+          <ul class="navbar-nav ms-auto">
+            {% if admin == true %}
+                <li class="nav-item">
+                    <a class="nav-link mx-3" href="{{ url_for('adminpage') }}"><strong>ADMIN</strong></a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('indexpage') }}"><strong>SEARCH</strong></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link mx-3" href="{{ url_for('rateFormPage') }}"><strong>RATE</strong></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('genedselectorpage') }}"><strong>FIND GEN-EDS</strong></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('aboutus') }}"><strong>ABOUT US</strong></a>
+            </li>
+          {%if user == None%}
+          <li class="nav-item">
+              <a class="nav-link mx-3" href="{{ url_for('login') }}"><strong>LOGIN</strong></a>
+          </li>
+          {%else%}
+          <div class="collapse navbar-collapse" style="margin-right: 20px;">
+              <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <strong>{{user}}</strong>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-left: -50px;height: 50px;width: 10px !important;">
+                    <a class="dropdown-item" href="{{ url_for('logout') }}" style="text-align: center;">LOGOUT</a>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            {%endif%}
+
+          </ul>
+
+      </div>
+
+    </nav>
+
+    <!-- Horizontal Rule below Navigation Bar -->
+    <hr class="navigation-hr" size="1">
+
+    <p style="height: 20px;"></p>
+    <div class="container jumbotron bg-light border">
+        <div class="row align-items-md-stretch">
+            <div class="col-md-8">
+                <h2 class="col-md-8 fs-4" style="margin-left: 50px;margin-top: 10px;">Pratik Patel</h2>
+                <p style="margin-left: 50px;">I am really passionate about coding and developing new systems that could potentially help many communities around the world. I am driven by challenging and difficult to solve problems. Currently, I am majoring in Computer Science at University of Illinois at Urbana-Champaign. I plan to graduate in the May of 2022. After my graduation, I am planning to work towards my masters in Computer Science alongside working in the industry. I looking for a job that could put my knowledge to test and make me a better computer programmer. I am ready to put my efforts and work as a team to achieve a common team goal. </p>
+                <button class="btn btn-outline-secondary" style="margin-left: 50px;" type="button" onclick=" window.location='https://www.linkedin.com/in/pratik-m-patel/'">Linkedin</button>
+                <button class="btn btn-outline-secondary" type="button" onclick=" window.location='https://github.com/pratik139patel/Personal-Projects.git'">Github</button>
+            </div>
+            
+            <div class="col-md-2">
+                <img class="prof-img" style="margin-left: 100px;" src="https://media-exp1.licdn.com/dms/image/C5603AQGBJYScKjZwDA/profile-displayphoto-shrink_200_200/0/1620327448303?e=1625702400&v=beta&t=G7PXh-8GQTOaI7dRy44HrQONGO2afQhZTctN6tUbI4k" alt="Pratik Patel" style="border-radius: 50%">
+            </div>
+        </div>
+
+    </div>
+      
+    <p style="height: 20px;"></p>
+    <div class="container jumbotron bg-light border">
+        <div class="row align-items-md-stretch">
+        
+        <div class="col-md-8">
+            <h2 class="col-md-8 fs-4" style="margin-left: 50px;margin-top: 10px;">Michael Harty</h2>
+            <p style="margin-left: 50px;">I am a second-year student studying computer science at the University of Illinois Urbana-Champaign with a double minor in mathematics and electrical engineering. My interests include website and app development, as well as machine-learning, and I'm currently seeking an opportunity to both apply and expand my knowledge in any field related to computer science.</p>
+            <button class="btn btn-outline-secondary" style="margin-left: 50px;" type="button" onclick=" window.location='https://www.linkedin.com/in/mharty21/'">Linkedin</button>
+            <button class="btn btn-outline-secondary" type="button" onclick=" window.location='https://github.com/mharty2'">Github</button>
+        </div>
+        
+        <div class="col-md-2">
+            <img class="prof-img" style="margin-left: 100px;" src="https://media-exp1.licdn.com/dms/image/C4D03AQFMaaSOoyFeHg/profile-displayphoto-shrink_200_200/0/1568308960452?e=1625097600&v=beta&t=bIjJJcqwXz856zLOzWbY6ZBpXTSwDYVki2_oTFKtaNc" alt="Michael" style="border-radius: 50%">
+        </div>
+        </div>
+
+    </div>
+
+    <p style="height: 20px;"></p>
+    <div class="container jumbotron bg-light border">
+        <div class="row align-items-md-stretch">
+            
+            <div class="col-md-8">
+            <h2 class="col-md-8 fs-4" style="margin-left: 50px;margin-top: 10px;">Omar Naeem</h2>
+            <p style="margin-left: 50px;">I am junior at UIUC majoring in Engineering Computer Science. I plan on becoming a Software Engineer and am interested in fields related to Machine Learning and Artificial Intelligence. I am also passionate about UI Design and Full Stack Development!</p>
+                <button class="btn btn-outline-secondary" style="margin-left: 50px;" type="button" onclick=" window.location='https://www.linkedin.com/in/omarnaeem33/'">Linkedin</button>
+                <button class="btn btn-outline-secondary" type="button" onclick=" window.location='https://github.com/omarn33'">Github</button>
+            </div>
+        
+            <div class="col-md-2">
+            <img class="prof-img" style="margin-left: 100px;" src="https://media-exp1.licdn.com/dms/image/C4E03AQEgF1a1IKBINQ/profile-displayphoto-shrink_200_200/0/1605335132263?e=1625097600&v=beta&t=msUJ_BZb085TUx8T8Ybl1C5eI-zMaOyL2VeXVPAXiVg" alt="Omar" style="border-radius: 50%">
+            </div>
+        </div>
+
+    </div>
+
+    <p style="height: 20px;"></p>
+    <div class="container jumbotron bg-light border">
+        <div class="row align-items-md-stretch">
+        
+        <div class="col-md-8">
+            <h2 class="col-md-8 fs-4" style="margin-left: 50px;margin-top: 10px;">Dimitar Pendurkov</h2>
+            <p style="margin-left: 50px;">Computer Science undergrad at the University of Illinois at Urbana-Champaign seeking a software engineering internship. Graduating 2022.</p>
+            <button class="btn btn-outline-secondary" style="margin-left: 50px;" type="button" onclick=" window.location='https://www.linkedin.com/in/dimitarpendurkov/'">Linkedin</button>
+            <button class="btn btn-outline-secondary" type="button" onclick=" window.location='https://github.com/tpjwm'">Github</button>
+        </div>
+        
+        <div class="col-md-2">
+            <img class="prof-img" style="margin-left: 100px;" src="https://media-exp1.licdn.com/dms/image/C4E03AQHzKEBuebJ_FQ/profile-displayphoto-shrink_200_200/0/1597855727533?e=1625097600&v=beta&t=npBSjFOmWV_M1QUdx1RthP1I-U8vtgA-fdeoIDUT8gU" alt="Dimitar" style="border-radius: 50%">
+        </div>
+        </div>
+
+    </div>
+    <p style="height: 20px;"></p>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='script/scripts.js') }}"></script>
+</html>
