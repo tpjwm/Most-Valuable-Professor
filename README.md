@@ -1,9 +1,12 @@
-# A Todo List demo App
-This is a todo list demo designed for CS411. 
-# Tutorial
-<iframe width="560" height="315" src="https://www.youtube.com/embed/sY1lLGe7ECA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+# Most Valuable Professor
+This was a semester long project for CS 411: Database Systems
 
-A comprehensive writeup is avaliable [here](https://tichung.com/blog/2021/20200323_flask/).
+This website is similar to rate my professor in the way that it displays useful information for students looking for courses
+
+It differs in the way that it is backed strongly by [data](https://github.com/wadefagen/datasets/tree/master/gpa) produced by the university
+
+# Details
+Details about this project, including design, features, dataflow, and more, are located in the project report pdf in this repository
 
 ## Requirements
 ```
@@ -12,8 +15,8 @@ python >= 3.5
 
 ## Getting started
 ```bash
-git clone https://github.com/a2975667/flask-gcp-mysql-demo.git
-cd flask-gcp-mysql-demo
+git clone https://github.com/tpjwm/Most-Valuable-Professor.git
+cd Most-Valuable-Professor
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -50,7 +53,12 @@ Setting up the deployment
 ```bash
 curl https://sdk.cloud.google.com | bash
 gcloud components install app-engine-python
-gcloud config set project cs411-sp21
+gcloud config set project #PROJECT-NAME
 gcloud auth login
 gcloud app deploy
 ```
+# Credits
+* [Pratik](https://github.com/pratik139patel/Personal-Projects.git) - Backend, Database implementation
+* [Michael](https://github.com/mharty2) - Backend, Database implementation
+* [Dimitar](https://github.com/tpjwm) - Backend, Frontend
+* [Omar](https://github.com/omarn33) - Frontend, Design
