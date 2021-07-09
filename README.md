@@ -1,4 +1,6 @@
 # Most Valuable Professor
+[CLICK HERE TO VISIT SITE](https://uiuc1867mvp.web.illinois.edu/)
+
 This was a semester long project for CS 411: Database Systems
 
 This website is similar to rate my professor in the way that it displays useful information for students looking for courses
